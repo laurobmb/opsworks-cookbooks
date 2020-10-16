@@ -1,6 +1,24 @@
+package 'git' do
+    action :install
+  end  
 
 execute "Create ModSecurity dir" do
 	command "mkdir -p /opt/modsec/"
+	action :run
+end
+
+execute "Install depedences" do
+	command "dnf -y install https://rpms.remirepo.net/enterprise/remi-release-8.rpm"
+	action :run
+end
+
+execute "Install depedences" do
+	command "dnf --enablerepo=PowerTools install -y doxygen yajl-devel"
+	action :run
+end
+
+execute "Install depedences" do
+	command "dnf --enablerepo=remi install -y GeoIP-devel"
 	action :run
 end
 
@@ -17,13 +35,7 @@ execute "Download ModSecurity" do
 end
 
 execute "Builder ModSecurity" do
-	command "
-        ./build.sh
-        git submodule init
-        git submodule update
-        ./configure
-        make
-        make install"
+	command "./build.sh;git submodule init;git submodule update;./configure;make;make install"
 	cwd "/opt/modsec/ModSecurity"
 	action :run
 end
