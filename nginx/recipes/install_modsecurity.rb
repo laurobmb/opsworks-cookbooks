@@ -1,50 +1,34 @@
 
 execute "Create ModSecurity dir" do
-	command "mkdir -p /opt/modsec/ModSecurity"
+	command "mkdir -p /opt/modsec/"
 	action :run
 end
 
 execute "Download ModSecurity" do
 	command "git clone https://github.com/SpiderLabs/ModSecurity.git"
+	cwd "/opt/modsec/"
+	action :run
+end
+
+execute "Download ModSecurity" do
+	command "git clone https://github.com/SpiderLabs/ModSecurity-nginx.git"
+	cwd "/opt/modsec/"
+	action :run
+end
+
+execute "Builder ModSecurity" do
+	command "
+    - ./build.sh
+    - git submodule init
+    - git submodule update
+    - ./configure
+    - make
+    - make install"
 	cwd "/opt/modsec/ModSecurity"
 	action :run
 end
 
 
-
-#
-#
-#- name: clone the modsecurity repository
-#git:
-#  repo: "https://github.com/SpiderLabs/ModSecurity.git"
-#  version: "{{ nginx_modsecurity_branch }}"
-#  accept_hostkey: yes 
-#  depth: 1 
-#  force: yes
-#  dest: /opt/modsec/ModSecurity
-#
-#- name: Build install modsecurity 
-#shell: "{{ item }}"
-#args:
-#  chdir: /opt/modsec/ModSecurity
-#with_items:
-#- ./build.sh
-#- git submodule init
-#- git submodule update
-#- ./configure
-#- make
-#- make install     
-#when: builder
-#
-#- name: clone the modsecurity-nginx repository {{installed_nginx_version}}
-#git:
-#  repo: "https://github.com/SpiderLabs/ModSecurity-nginx.git"
-#  version: "{{ nginx_modsecurity_nginx_branch }}"
-#  accept_hostkey: yes
-#  depth: 1
-#  force: yes
-#  dest: /opt/modsec/ModSecurity-nginx
-#
 #- name: clone the owasp-modsecurity-crs repository
 #git:
 #  repo: "https://github.com/SpiderLabs/owasp-modsecurity-crs.git"
