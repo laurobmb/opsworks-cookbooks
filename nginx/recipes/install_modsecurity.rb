@@ -1,6 +1,6 @@
 
 execute "Create ModSecurity dir" do
-	command "mkdir /opt/modsec/ModSecurity"
+	command "mkdir -p /opt/modsec/ModSecurity"
 	action :run
 end
 
