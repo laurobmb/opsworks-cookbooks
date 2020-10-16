@@ -18,12 +18,12 @@ end
 
 execute "Builder ModSecurity" do
 	command "
-    - ./build.sh
-    - git submodule init
-    - git submodule update
-    - ./configure
-    - make
-    - make install"
+        ./build.sh
+        git submodule init
+        git submodule update
+        ./configure
+        make
+        make install"
 	cwd "/opt/modsec/ModSecurity"
 	action :run
 end
