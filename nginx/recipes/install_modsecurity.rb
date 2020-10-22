@@ -8,17 +8,17 @@ execute "Create ModSecurity dir" do
 end
 
 execute "Install depedences" do
-	command "yum -y install https://rpms.remirepo.net/enterprise/remi-release-7.rpm"
+	command "# yum install lmdb lmdb-devel libxml2 libxml2-devel ssdeep ssdeep-devel lua lua-devel pcre-devel"
 	action :run
 end
 
 execute "Install depedences" do
-	command "yum --enablerepo=PowerTools install -y doxygen yajl-devel"
+	command "yum groupinstall 'Development Tools' -y"
 	action :run
 end
 
 execute "Install depedences" do
-	command "yum --enablerepo=remi install -y GeoIP-devel"
+	command "yum install gcc-c++ flex bison yajl yajl-devel curl-devel curl GeoIP-devel doxygen zlib-devel"
 	action :run
 end
 
