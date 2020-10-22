@@ -8,7 +8,7 @@ execute "Create ModSecurity dir" do
 end
 
 execute "Install depedences" do
-	command "# yum install lmdb lmdb-devel libxml2 libxml2-devel ssdeep ssdeep-devel lua lua-devel pcre-devel"
+	command "# yum -y install lmdb lmdb-devel libxml2 libxml2-devel ssdeep ssdeep-devel lua lua-devel pcre-devel"
 	action :run
 end
 
@@ -18,7 +18,7 @@ execute "Install depedences" do
 end
 
 execute "Install depedences" do
-	command "yum install gcc-c++ flex bison yajl yajl-devel curl-devel curl GeoIP-devel doxygen zlib-devel"
+	command "yum install -y gcc-c++ flex bison yajl yajl-devel curl-devel curl GeoIP-devel doxygen zlib-devel"
 	action :run
 end
 
