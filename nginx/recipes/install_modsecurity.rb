@@ -8,20 +8,18 @@ execute "Create ModSecurity dir" do
 end
 
 execute "Install depedences" do
-	command "# yum -y install lmdb lmdb-devel libxml2 libxml2-devel ssdeep ssdeep-devel lua lua-devel pcre-devel"
-	action :run
-end 
-
-execute "Install depedences" do
 	command "yum groupinstall 'Development Tools' -y"
 	action :run
 end
 
-execute "Install depedences" do
-	command "yum install -y gcc-c++ flex bison yajl yajl-devel curl-devel curl GeoIP-devel doxygen zlib-devel"
-	action :run
+node[:nginx][:packages].each do |pkg|
+	package pkg do
+	  action :install
+	  retries 3
+	  retry_delay 5
+	end
 end
-
+ 
 execute "Download ModSecurity" do
 	command "git clone https://github.com/SpiderLabs/ModSecurity.git"
 	cwd "/opt/modsec/"
@@ -47,3 +45,20 @@ execute "owasp-modsecurity-crs" do
 end
 
 
+
+RUN cd /opt/; \
+    wget http://nginx.org/download/nginx-${VERSAO}.tar.gz ;\
+    tar xzf nginx-${VERSAO}.tar.gz
+
+RUN cd /opt/nginx-${VERSAO};\
+    ./configure \
+    --user=nginx \
+    --group=nginx \
+    --with-pcre-jit \
+    --with-debug \
+    --with-http_ssl_module \
+    --with-http_v2_module \
+    --with-http_realip_module \
+    --add-module=/opt/modsec/ModSecurity-nginx ;\
+    make; \
+    make install
