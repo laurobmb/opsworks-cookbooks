@@ -8,6 +8,10 @@ execute "Install depedences" do
 	action :run
 end
 
+package %w("git" "vim") do
+	action :install
+end
+
 node[:nginx][:packages].each do |pkg|
 	package pkg do
 	  action :install
