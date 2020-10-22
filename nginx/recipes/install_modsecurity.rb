@@ -8,7 +8,7 @@ execute "Install depedences" do
 	action :run
 end
 
-node[:nginx][:packages].each do |pkg|
+%w{ git vim }.each do |pkg|
 	package pkg do
 	  action :install
 	  retries 3
