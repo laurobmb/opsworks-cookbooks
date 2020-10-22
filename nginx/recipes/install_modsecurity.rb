@@ -8,14 +8,6 @@ execute "Install depedences" do
 	action :run
 end
 
-%w{ git vim }.each do |pkg|
-	package pkg do
-	  action :install
-	  retries 3
-	  retry_delay 5
-	end
-end
- 
 execute "Download ModSecurity" do
 	command "git clone https://github.com/SpiderLabs/ModSecurity.git"
 	cwd "/opt/modsec/"
@@ -29,7 +21,7 @@ execute "Download ModSecurity" do
 end
 
 execute "Builder ModSecurity" do
-	command "./build.sh;git submodule init;git submodule update;./configure;make;make install"
+	command "git submodule init;git submodule update;./build.sh;./configure;make;make install"
 	cwd "/opt/modsec/ModSecurity"
 	action :run
 end
