@@ -10,7 +10,7 @@ end
 execute "Install depedences" do
 	command "# yum -y install lmdb lmdb-devel libxml2 libxml2-devel ssdeep ssdeep-devel lua lua-devel pcre-devel"
 	action :run
-end
+end 
 
 execute "Install depedences" do
 	command "yum groupinstall 'Development Tools' -y"
@@ -40,28 +40,10 @@ execute "Builder ModSecurity" do
 	action :run
 end
 
+execute "owasp-modsecurity-crs" do
+	command "git clone https://github.com/SpiderLabs/owasp-modsecurity-crs.git"
+	cwd "/usr/local/nginx/conf/owasp-crs"
+	action :run
+end
 
-#- name: clone the owasp-modsecurity-crs repository
-#git:
-#  repo: "https://github.com/SpiderLabs/owasp-modsecurity-crs.git"
-#  accept_hostkey: yes
-#  depth: 1
-#  force: yes
-#  dest: /usr/local/nginx/conf/owasp-crs
-#
-#- name: download and extract the nginx sources for building the module
-#unarchive: 
-#  src: "http://nginx.org/download/nginx-{{ installed_nginx_version }}.tar.gz"
-#  dest: /opt
-#  creates: "/opt/nginx-{{ installed_nginx_version }}"
-#  remote_src: yes
-#
-#- name: Build install nginx
-#shell: "{{ item }}"
-#args:
-#  chdir: "/opt/nginx-{{ installed_nginx_version }}"
-#with_items:
-#  - ./configure --user=nginx --group=nginx --with-pcre-jit --with-debug --with-http_ssl_module --with-http_v2_module --with-http_realip_module --add-module=/opt/modsec/ModSecurity-nginx
-#  - make
-#  - make install
-#when: builder
+
