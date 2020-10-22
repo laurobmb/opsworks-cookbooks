@@ -8,10 +8,13 @@ execute "Install depedences" do
 	action :run
 end
 
-package %w("git" "vim") do
-	action :install
+node[:nginx][:packages].each do |pkg|
+	package pkg do
+	  action :install
+	  retries 3
+	  retry_delay 5
+	end
 end
-
  
 execute "Download ModSecurity" do
 	command "git clone https://github.com/SpiderLabs/ModSecurity.git"
