@@ -8,17 +8,17 @@ execute "Create ModSecurity dir" do
 end
 
 execute "Install depedences" do
-	command "dnf -y install https://rpms.remirepo.net/enterprise/remi-release-8.rpm"
+	command "yum -y install https://rpms.remirepo.net/enterprise/remi-release-7.rpm"
 	action :run
 end
 
 execute "Install depedences" do
-	command "dnf --enablerepo=PowerTools install -y doxygen yajl-devel"
+	command "yum --enablerepo=PowerTools install -y doxygen yajl-devel"
 	action :run
 end
 
 execute "Install depedences" do
-	command "dnf --enablerepo=remi install -y GeoIP-devel"
+	command "yum --enablerepo=remi install -y GeoIP-devel"
 	action :run
 end
 
