@@ -3,6 +3,7 @@ packages = []
 case node[:platform_family]
     when 'rhel','centos'
       packages = [
+        "git",
         "lmdb",
         "lmdb-devel",
         "libxml2",
@@ -25,4 +26,4 @@ case node[:platform_family]
         ]
     end
 
-default[:cookbookname][:packages] = packages
+default[:packages][:packages] = packages

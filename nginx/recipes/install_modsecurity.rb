@@ -1,7 +1,3 @@
-package 'git' do
-    action :install
-  end  
-
 execute "Create ModSecurity dir" do
 	command "mkdir -p /opt/modsec/"
 	action :run
